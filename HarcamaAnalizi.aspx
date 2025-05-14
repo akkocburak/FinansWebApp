@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Harcama Analizi" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="HarcamaAnalizi.aspx.cs" Inherits="FinansWebApp.HarcamaAnalizi" %>
+<%@ Page Title="Harcama Analizi" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="HarcamaAnalizi.aspx.cs" Inherits="FinansWebApp.HarcamaAnalizi" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container">
@@ -65,7 +65,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: function (value) {
+                                callback: function(value) {
                                     return '₺' + value.toLocaleString('tr-TR');
                                 }
                             },
@@ -82,7 +82,7 @@
                     plugins: {
                         tooltip: {
                             callbacks: {
-                                label: function (context) {
+                                label: function(context) {
                                     return '₺' + context.parsed.y.toLocaleString('tr-TR');
                                 }
                             }
@@ -126,7 +126,7 @@
                         },
                         tooltip: {
                             callbacks: {
-                                label: function (context) {
+                                label: function(context) {
                                     var total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     var value = context.raw;
                                     var percentage = ((value / total) * 100).toFixed(1);
