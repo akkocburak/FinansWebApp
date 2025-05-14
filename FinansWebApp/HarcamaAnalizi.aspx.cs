@@ -36,7 +36,7 @@ namespace FinansWebApp
                 SELECT 
                     FORMAT(t.TransactionDate, 'yyyy-MM') as YearMonth,
                     FORMAT(t.TransactionDate, 'MMMM yyyy') as MonthYear,
-                    SUM(CASE WHEN t.TransactionType = 'Gider' THEN t.Amount ELSE 0 END) as TotalExpense
+                    SUM(CASE WHEN t.TransactionType = 'Harcamalar' THEN t.Amount ELSE 0 END) as TotalExpense
                 FROM Transactions t
                 INNER JOIN Accounts a ON t.AccountID = a.AccountID
                 WHERE a.AccountNumber = @accountNumber
@@ -48,13 +48,13 @@ namespace FinansWebApp
             string categoryQuery = @"
                 SELECT 
                     c.CategoryName,
-                    SUM(CASE WHEN t.TransactionType = 'Gider' THEN t.Amount ELSE 0 END) as TotalExpense
+                    SUM(CASE WHEN t.TransactionType = 'Harcamalar' THEN t.Amount ELSE 0 END) as TotalExpense
                 FROM Transactions t
                 INNER JOIN Accounts a ON t.AccountID = a.AccountID
                 INNER JOIN Categories c ON t.CategoryID = c.CategoryID
                 WHERE a.AccountNumber = @accountNumber
                     AND t.TransactionDate >= DATEADD(MONTH, -1, GETDATE())  -- Son 1 ayın verileri
-                    AND t.TransactionType = 'Gider'
+                    AND t.TransactionType = 'Harcamalar'
                 GROUP BY c.CategoryName
                 ORDER BY TotalExpense DESC";
 

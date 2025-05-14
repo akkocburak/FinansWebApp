@@ -100,15 +100,19 @@
                     datasets: [{
                         data: kategoriHarcamalari,
                         backgroundColor: [
-                            'rgba(220, 53, 69, 0.8)',
-                            'rgba(220, 53, 69, 0.6)',
-                            'rgba(220, 53, 69, 0.4)',
-                            'rgba(220, 53, 69, 0.2)',
-                            'rgba(108, 117, 125, 0.8)',
-                            'rgba(108, 117, 125, 0.6)',
-                            'rgba(108, 117, 125, 0.4)',
-                            'rgba(108, 117, 125, 0.2)'
-                        ],
+                '#FF6B6B',  // Kırmızı
+                '#4ECDC4',  // Turkuaz
+                '#45B7D1',  // Mavi
+                '#96CEB4',  // Açık Yeşil
+                '#FFBE0B',  // Sarı
+                '#9B5DE5',  // Mor
+                '#00BBF9',  // Açık Mavi
+                '#00F5D4',  // Mint
+                '#7209B7',  // Koyu Mor
+                '#3A86FF',  // Parlak Mavi
+                '#38B000',  // Yeşil
+                '#F15BB5'   // Pembe
+            ],
                         borderColor: 'white',
                         borderWidth: 2
                     }]

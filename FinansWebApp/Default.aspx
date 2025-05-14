@@ -1,6 +1,57 @@
 ﻿<%@ Page Title="Harcamalarım" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="FinansWebApp.Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <!-- Bakiye Kartları -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="balance-wrapper">
+                <div class="balance-card main-balance">
+                    <div class="balance-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="balance-info">
+                        <h6>Toplam Bakiye</h6>
+                        <h3 class="balance-amount">
+                            <asp:Label ID="lblTotalBalance" runat="server" />
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="balance-card income">
+                    <div class="balance-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="balance-info">
+                        <h6>Bu Ay Gelir</h6>
+                        <h3 class="balance-amount">
+                            <asp:Label ID="lblMonthlyIncome" runat="server" />
+                        </h3>
+                        <div class="balance-change positive">
+                            <i class="fas fa-chart-line"></i>
+                            <asp:Label ID="lblIncomeChange" runat="server" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="balance-card expense">
+                    <div class="balance-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="balance-info">
+                        <h6>Bu Ay Gider</h6>
+                        <h3 class="balance-amount">
+                            <asp:Label ID="lblMonthlyExpense" runat="server" />
+                        </h3>
+                        <div class="balance-change negative">
+                            <i class="fas fa-chart-line"></i>
+                            <asp:Label ID="lblExpenseChange" runat="server" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="row mb-4">
             <div class="col-12">
@@ -136,6 +187,129 @@
             border-radius: 4px;
             background-color: #dc3545;
             color: white;
+        }
+
+        .balance-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .balance-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 1;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .main-balance .balance-icon {
+            background: linear-gradient(135deg, #dc3545 0%, #8b0000 100%);
+            color: white;
+        }
+
+        .income .balance-icon {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+        }
+
+        .expense .balance-icon {
+            background: linear-gradient(135deg, #dc3545 0%, #8b0000 100%);
+            color: white;
+        }
+
+        .balance-info {
+            flex-grow: 1;
+        }
+
+        .balance-info h6 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .balance-amount {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 0.5rem;
+        }
+
+        .main-balance .balance-amount {
+            color: #dc3545;
+        }
+
+        .balance-change {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .balance-change.positive {
+            color: #28a745;
+        }
+
+        .balance-change.negative {
+            color: #dc3545;
+        }
+
+        .balance-change i {
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .balance-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .balance-card {
+                padding: 1.2rem;
+            }
+
+            .balance-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .balance-amount {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </asp:Content> 
