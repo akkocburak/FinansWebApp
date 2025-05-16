@@ -1,31 +1,20 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
-from model import ExpensePredictor
 import pandas as pd
+from model import predict
 
 app = Flask(__name__)
-CORS(app)  # CORS desteği ekle
-predictor = ExpensePredictor()
 
 @app.route('/predict', methods=['POST'])
-def predict():
+def predict_route():
     try:
-        data = request.json
-        transactions = pd.DataFrame(data['transactions'])
-        prediction = predictor.predict(transactions)
-        return jsonify({
-            'predicted_amount': float(prediction),
-            'status': 'success'
-        })
+        # JSON'dan DataFrame oluştur
+        data = request.get_json()
+        df = pd.DataFrame(data)
+        # Modelin predict fonksiyonunu çağır
+        result = predict(df)
+        return jsonify(result)
     except Exception as e:
-        return jsonify({
-            'error': str(e),
-            'status': 'error'
-        }), 500
-
-@app.route('/health', methods=['GET'])
-def health_check():
-    return jsonify({'status': 'healthy'})
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)

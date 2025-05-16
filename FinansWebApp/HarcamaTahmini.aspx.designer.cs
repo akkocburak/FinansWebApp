@@ -9,18 +9,42 @@
 
 namespace FinansWebApp
 {
-
-
     public partial class HarcamaTahmini
     {
-
         /// <summary>
-        /// lblPrediction control.
+        /// lblHoltWinters control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrediction;
+        protected global::System.Web.UI.WebControls.Label lblHoltWinters;
+
+        /// <summary>
+        /// lblLinearRegression control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLinearRegression;
+
+        /// <summary>
+        /// lblFinalPrediction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFinalPrediction;
+
+        /// <summary>
+        /// btnPredict control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPredict;
     }
 }

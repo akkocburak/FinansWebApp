@@ -14,7 +14,7 @@ namespace FinansWebApp.Services
     {
         private readonly string _apiUrl = "http://localhost:5000";
 
-        public async Task<decimal> PredictNextMonthExpense(string accountNumber)
+        public async Task<PredictionResult> PredictNextMonthExpense(string accountNumber)
         {
             try
             {
@@ -35,8 +35,19 @@ namespace FinansWebApp.Services
                         "POST",
                         jsonRequest
                     );
-                    var prediction = JsonConvert.DeserializeObject<PredictionResponse>(response);
-                    return prediction.predicted_amount;
+                    
+                    // Python servisinden gelen yanıtı PredictionResponse'a dönüştür
+                    var predictionResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(response);
+                    
+                    // PredictionResult nesnesini oluştur
+                    var result = new PredictionResult
+                    {
+                        HoltWintersPrediction = Convert.ToDecimal(predictionResponse["HoltWintersPrediction"]),
+                        LinearRegressionPrediction = Convert.ToDecimal(predictionResponse["LinearRegressionPrediction"]),
+                        FinalPrediction = Convert.ToDecimal(predictionResponse["FinalPrediction"])
+                    };
+                    
+                    return result;
                 }
             }
             catch (Exception ex)
@@ -90,9 +101,10 @@ namespace FinansWebApp.Services
         public decimal Amount { get; set; }
     }
 
-    public class PredictionResponse
+    public class PredictionResult
     {
-        public decimal predicted_amount { get; set; }
-        public string status { get; set; }
+        public decimal HoltWintersPrediction { get; set; }
+        public decimal LinearRegressionPrediction { get; set; }
+        public decimal FinalPrediction { get; set; }
     }
 }

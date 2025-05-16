@@ -9,12 +9,34 @@
         </div>
         
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Tahmini Harcama Tutarı</h5>
+                        <h5 class="card-title">Holt-Winters Tahmini</h5>
                         <h3 class="prediction-amount">
-                            <asp:Label ID="lblPrediction" runat="server" CssClass="text-primary" />
+                            <asp:Label ID="lblHoltWinters" runat="server" CssClass="text-primary" />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Linear Regression Tahmini</h5>
+                        <h3 class="prediction-amount">
+                            <asp:Label ID="lblLinearRegression" runat="server" CssClass="text-success" />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Ortalama Tahmin</h5>
+                        <h3 class="prediction-amount">
+                            <asp:Label ID="lblFinalPrediction" runat="server" CssClass="text-danger" />
                         </h3>
                         <p class="text-muted">
                             <small>Son 12 aylık harcama verilerine dayanarak yapılan tahmin</small>
@@ -31,9 +53,17 @@
 
     <style>
         .prediction-amount {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 600;
             margin: 1.5rem 0;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            color: #495057;
+            font-weight: 500;
         }
     </style>
 </asp:Content>

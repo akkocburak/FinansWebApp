@@ -35,12 +35,22 @@ namespace FinansWebApp
             try
             {
                 string accountNumber = Session["AccountNumber"].ToString();
-                decimal predictedExpense = await _mlService.PredictNextMonthExpense(accountNumber);
-                lblPrediction.Text = string.Format("₺{0:N2}", predictedExpense);
+                var predictionResult = await _mlService.PredictNextMonthExpense(accountNumber);
+
+                // Holt-Winters tahmini göster
+                lblHoltWinters.Text = string.Format("₺{0:N2}", predictionResult.HoltWintersPrediction);
+
+                // Linear Regression tahmini göster
+                lblLinearRegression.Text = string.Format("₺{0:N2}", predictionResult.LinearRegressionPrediction);
+
+                // Final tahmin göster
+                lblFinalPrediction.Text = string.Format("₺{0:N2}", predictionResult.FinalPrediction);
             }
             catch (Exception ex)
             {
-                lblPrediction.Text = "Tahmin yapılamadı. Lütfen daha sonra tekrar deneyin.";
+                lblHoltWinters.Text = "Hata";
+                lblLinearRegression.Text = "Hata";
+                lblFinalPrediction.Text = "Tahmin yapılamadı. Lütfen daha sonra tekrar deneyin.";
                 System.Diagnostics.Debug.WriteLine($"Tahmin hatası: {ex.Message}");
             }
         }
