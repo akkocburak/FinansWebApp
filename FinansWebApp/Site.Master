@@ -207,6 +207,11 @@
                                 <i class="fas fa-chart-pie"></i> Harcama Analizi
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%: Page.Title == "Harcama Tahmini" ? "active" : "" %>" href="HarcamaTahmini.aspx">
+                                <i class="fas fa-calculator"></i> Harcama Tahmini
+                            </a>
+                        </li>
                     </ul>
                     
                     <ul class="navbar-nav ml-auto">
