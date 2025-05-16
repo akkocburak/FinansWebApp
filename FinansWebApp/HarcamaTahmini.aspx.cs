@@ -21,13 +21,12 @@ namespace FinansWebApp
                 if (Session["AccountNumber"] == null)
                 {
                     Response.Redirect("Login.aspx");
+                    return;
                 }
-            }
-        }
 
-        protected void btnPredict_Click(object sender, EventArgs e)
-        {
-            RegisterAsyncTask(new PageAsyncTask(async () => await PredictExpense()));
+                // Sayfa yüklendiğinde tahmin işlemini başlat
+                RegisterAsyncTask(new PageAsyncTask(async () => await PredictExpense()));
+            }
         }
 
         private async Task PredictExpense()
@@ -35,23 +34,53 @@ namespace FinansWebApp
             try
             {
                 string accountNumber = Session["AccountNumber"].ToString();
+                System.Diagnostics.Debug.WriteLine(string.Format("Tahmin yapılıyor - Hesap No: {0}", accountNumber));
+
                 var predictionResult = await _mlService.PredictNextMonthExpense(accountNumber);
 
+                // Debug bilgileri
+                System.Diagnostics.Debug.WriteLine("Tahmin sonuçları:");
+                System.Diagnostics.Debug.WriteLine(string.Format("HoltWinters: {0}", predictionResult.HoltWintersPrediction));
+                System.Diagnostics.Debug.WriteLine(string.Format("LinearRegression: {0}", predictionResult.LinearRegressionPrediction));
+                System.Diagnostics.Debug.WriteLine(string.Format("Final: {0}", predictionResult.FinalPrediction));
+
                 // Holt-Winters tahmini göster
-                lblHoltWinters.Text = string.Format("₺{0:N2}", predictionResult.HoltWintersPrediction);
+                if (predictionResult.HoltWintersPrediction != 0)
+                {
+                    lblHoltWinters.Text = string.Format("₺{0:N2}", predictionResult.HoltWintersPrediction);
+                }
+                else
+                {
+                    lblHoltWinters.Text = "Hesaplanamadı";
+                }
 
                 // Linear Regression tahmini göster
-                lblLinearRegression.Text = string.Format("₺{0:N2}", predictionResult.LinearRegressionPrediction);
+                if (predictionResult.LinearRegressionPrediction != 0)
+                {
+                    lblLinearRegression.Text = string.Format("₺{0:N2}", predictionResult.LinearRegressionPrediction);
+                }
+                else
+                {
+                    lblLinearRegression.Text = "Hesaplanamadı";
+                }
 
                 // Final tahmin göster
-                lblFinalPrediction.Text = string.Format("₺{0:N2}", predictionResult.FinalPrediction);
+                if (predictionResult.FinalPrediction != 0)
+                {
+                    lblFinalPrediction.Text = string.Format("₺{0:N2}", predictionResult.FinalPrediction);
+                }
+                else
+                {
+                    lblFinalPrediction.Text = "Hesaplanamadı";
+                }
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(string.Format("Tahmin hatası: {0}", ex.Message));
+                System.Diagnostics.Debug.WriteLine(string.Format("Stack trace: {0}", ex.StackTrace));
                 lblHoltWinters.Text = "Hata";
                 lblLinearRegression.Text = "Hata";
                 lblFinalPrediction.Text = "Tahmin yapılamadı. Lütfen daha sonra tekrar deneyin.";
-                System.Diagnostics.Debug.WriteLine($"Tahmin hatası: {ex.Message}");
             }
         }
     }

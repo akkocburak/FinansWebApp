@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace FinansWebApp.Services
 {
@@ -20,13 +21,35 @@ namespace FinansWebApp.Services
             {
                 // Son 13 ayın verilerini al
                 var transactions = await GetTransactionHistory(accountNumber);
+                
+                // Debug: İşlem sayısını kontrol et
+                System.Diagnostics.Debug.WriteLine(string.Format("Toplam işlem sayısı: {0}", transactions.Count));
 
-                var request = new
+                // JSON serileştirme ayarlarını yapılandır
+                var jsonSettings = new JsonSerializerSettings
                 {
-                    transactions = transactions
+                    DateFormatString = "yyyy-MM-ddTHH:mm:ss",
+                    Formatting = Formatting.Indented
                 };
 
-                var jsonRequest = JsonConvert.SerializeObject(request);
+                // TransactionData listesini düz dictionary listesine çevir
+                var transactionsList = transactions.Select(t => new Dictionary<string, object>
+                {
+                    { "TransactionDate", t.TransactionDate.ToString("yyyy-MM-ddTHH:mm:ss") },
+                    { "TransactionType", t.TransactionType },
+                    { "Amount", t.Amount }
+                }).ToList();
+
+                var request = new Dictionary<string, object>
+                {
+                    { "transactions", transactionsList }
+                };
+
+                var jsonRequest = JsonConvert.SerializeObject(request, jsonSettings);
+                
+                // Debug: Gönderilen JSON'ı kontrol et
+                System.Diagnostics.Debug.WriteLine(string.Format("Gönderilen JSON: {0}", jsonRequest));
+
                 using (var client = new WebClient())
                 {
                     client.Headers[HttpRequestHeader.ContentType] = "application/json";
@@ -36,23 +59,52 @@ namespace FinansWebApp.Services
                         jsonRequest
                     );
                     
+                    // Debug: Alınan yanıtı kontrol et
+                    System.Diagnostics.Debug.WriteLine(string.Format("Python servisinden gelen yanıt: {0}", response));
+
                     // Python servisinden gelen yanıtı PredictionResponse'a dönüştür
                     var predictionResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(response);
                     
-                    // PredictionResult nesnesini oluştur
-                    var result = new PredictionResult
+                    // Debug: Dictionary içeriğini kontrol et
+                    foreach (var kvp in predictionResponse)
                     {
-                        HoltWintersPrediction = Convert.ToDecimal(predictionResponse["HoltWintersPrediction"]),
-                        LinearRegressionPrediction = Convert.ToDecimal(predictionResponse["LinearRegressionPrediction"]),
-                        FinalPrediction = Convert.ToDecimal(predictionResponse["FinalPrediction"])
-                    };
+                        System.Diagnostics.Debug.WriteLine(string.Format("Key: {0}, Value: {1}", kvp.Key, kvp.Value));
+                    }
+
+                    // PredictionResult nesnesini oluştur
+                    var result = new PredictionResult();
+
+                    // Null kontrolü yaparak değerleri ata
+                    if (predictionResponse["HoltWintersPrediction"] != null && 
+                        predictionResponse["HoltWintersPrediction"].ToString() != "null")
+                    {
+                        result.HoltWintersPrediction = Convert.ToDecimal(predictionResponse["HoltWintersPrediction"]);
+                    }
+                    
+                    if (predictionResponse["LinearRegressionPrediction"] != null && 
+                        predictionResponse["LinearRegressionPrediction"].ToString() != "null")
+                    {
+                        result.LinearRegressionPrediction = Convert.ToDecimal(predictionResponse["LinearRegressionPrediction"]);
+                    }
+                    
+                    if (predictionResponse["FinalPrediction"] != null && 
+                        predictionResponse["FinalPrediction"].ToString() != "null")
+                    {
+                        result.FinalPrediction = Convert.ToDecimal(predictionResponse["FinalPrediction"]);
+                    }
+
+                    // Debug: Sonuç değerlerini kontrol et
+                    System.Diagnostics.Debug.WriteLine(string.Format("HoltWinters: {0}", result.HoltWintersPrediction));
+                    System.Diagnostics.Debug.WriteLine(string.Format("LinearRegression: {0}", result.LinearRegressionPrediction));
+                    System.Diagnostics.Debug.WriteLine(string.Format("Final: {0}", result.FinalPrediction));
                     
                     return result;
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Tahmin hatası: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine(string.Format("Tahmin hatası: {0}", ex.Message));
+                System.Diagnostics.Debug.WriteLine(string.Format("Stack Trace: {0}", ex.StackTrace));
                 throw;
             }
         }

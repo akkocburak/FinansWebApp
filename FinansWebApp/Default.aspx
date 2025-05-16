@@ -86,14 +86,9 @@
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+ 
+                      
 
-                                <asp:TemplateField HeaderText="Kategori" ItemStyle-CssClass="align-middle">
-                                    <ItemTemplate>
-                                        <span class="badge" style="background-color: rgba(220, 53, 69, 0.1); color: #dc3545;">
-                                            <%# Eval("CategoryName") %>
-                                        </span>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
 
                                 <asp:BoundField DataField="Description" HeaderText="Açıklama" ItemStyle-CssClass="align-middle" />
 
@@ -105,11 +100,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Bakiye" ItemStyle-CssClass="align-middle">
-                                    <ItemTemplate>
-                                        <strong>₺<%# String.Format("{0:N2}", Eval("Balance")) %></strong>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                               
                             </Columns>
                             <PagerStyle CssClass="pagination-container" />
                             <HeaderStyle CssClass="bg-light" />
