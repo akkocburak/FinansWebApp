@@ -9,10 +9,52 @@
 
 namespace FinansWebApp
 {
-
-
     public partial class HarcamaAnalizi
     {
+        /// <summary>
+        /// ddlAySecimi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAySecimi;
+
+        /// <summary>
+        /// lblSeciliDonem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSeciliDonem;
+
+        /// <summary>
+        /// lblToplamGelir control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblToplamGelir;
+
+        /// <summary>
+        /// lblToplamGider control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblToplamGider;
+
+        /// <summary>
+        /// lblNetDurum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNetDurum;
 
         /// <summary>
         /// ltrlHarcamaVerileri control.

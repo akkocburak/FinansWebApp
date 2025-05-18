@@ -39,12 +39,39 @@ namespace FinansWebApp
         protected global::System.Web.UI.WebControls.Label lblFinalPrediction;
 
         /// <summary>
-        /// btnPredict control.
+        /// lblCategoryError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPredict;
+        protected global::System.Web.UI.WebControls.Label lblCategoryError;
+
+        /// <summary>
+        /// gvCategoryPredictions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvCategoryPredictions;
+
+        /// <summary>
+        /// lblRecommendationError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRecommendationError;
+
+        /// <summary>
+        /// rptSavingsRecommendations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptSavingsRecommendations;
     }
 }
